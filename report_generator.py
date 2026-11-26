@@ -182,7 +182,7 @@ def generate_html_security_report(
                 <div>
                     <div style="font-size: 18px; font-weight: bold; color: #0f172a; margin-bottom: 4px;">{unified_status}</div>
                     <div style="font-size: 13px; color: #475569;">
-                        Target Domain: <strong>{domain}</strong> | Evaluation Engine: Random Forest AI + WHOIS & DNS Threat Intel
+                        Target Domain: <strong>{domain}</strong> | Evaluation Engine: XGBoost AI + WHOIS & DNS Threat Intel
                     </div>
                 </div>
             </div>

@@ -115,7 +115,7 @@ def scan_url_endpoint(req: URLScanRequest):
 @app.post("/api/v1/predict-transaction", tags=["Transaction Fraud AI"])
 def predict_transaction_endpoint(req: TransactionRequest):
     """
-    Evaluates e-commerce transaction parameters against the trained Random Forest AI model,
+    Evaluates e-commerce transaction parameters against the trained XGBoost AI model,
     returning fraud risk probability, risk level, and Explainable AI (XAI) feature attribution.
     """
     m, cols = get_model()

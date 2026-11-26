@@ -24,6 +24,12 @@ from sklearn.metrics import (
     confusion_matrix
 )
 
+try:
+    import xgboost as xgb
+    HAS_XGBOOST = True
+except ImportError:
+    HAS_XGBOOST = False
+
 from download_dataset import get_dataset_path
 import database
 
@@ -89,14 +95,23 @@ def train_ai_model():
     print(f"    • Training records : {len(X_train):,}")
     print(f"    • Testing records  : {len(X_test):,}")
 
-    # Step 4: Train Random Forest Classifier
-    print("\n[+] Training Random Forest Classifier (100 Decision Trees)...")
-    model = RandomForestClassifier(
-        n_estimators=100,
-        max_depth=12,
-        random_state=42,
-        n_jobs=-1
-    )
+    # Step 4: Train XGBoost Classifier (with Random Forest fallback)
+    if HAS_XGBOOST:
+        print("\n[+] Training XGBoost Classifier (Gradient Boosted Trees - Best Performer)...")
+        model = xgb.XGBClassifier(
+            n_estimators=100,
+            max_depth=6,
+            random_state=42,
+            eval_metric="logloss"
+        )
+    else:
+        print("\n[+] Training Random Forest Classifier (100 Decision Trees)...")
+        model = RandomForestClassifier(
+            n_estimators=100,
+            max_depth=12,
+            random_state=42,
+            n_jobs=-1
+        )
     model.fit(X_train, y_train)
 
     end_time = datetime.datetime.now()

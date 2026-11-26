@@ -93,7 +93,8 @@ with st.sidebar:
 
     try:
         model, cols = load_cached_model()
-        st.success(f"🤖 Random Forest Loaded ({len(cols)} Features)")
+        model_name = "XGBoost" if "xgb" in type(model).__module__.lower() or "xgboost" in type(model).__name__.lower() else ("Random Forest" if "forest" in type(model).__name__.lower() else type(model).__name__)
+        st.success(f"🤖 {model_name} Loaded ({len(cols)} Features)")
     except Exception as e:
         st.warning(f"⚠️ Model: {e}")
 
@@ -180,7 +181,7 @@ with tab1:
 # ==============================================================================
 with tab2:
     st.subheader("💳 Layer 2: AI Transaction Fraud Risk Simulator & Explainable AI (XAI)")
-    st.write("Simulate any e-commerce transaction and inspect the Random Forest model's prediction along with individual risk factor contributions.")
+    st.write("Simulate any e-commerce transaction and inspect the XGBoost model's prediction along with individual risk factor contributions.")
 
     model, feature_columns = load_cached_model()
 
@@ -374,7 +375,7 @@ with tab4:
     chart_df = b_df.set_index("name")[["f1", "accuracy"]]
     st.bar_chart(chart_df)
 
-    st.write("#### 💡 Random Forest Feature Importances")
+    st.write("#### 💡 XGBoost Feature Importances")
     try:
         model, cols = load_cached_model()
         if hasattr(model, "feature_importances_"):
